@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("io.minio:minio:8.3.5")
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.141")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")

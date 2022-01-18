@@ -1,67 +1,40 @@
 package com.api.demo.service
 
-import io.minio.BucketExistsArgs
-import io.minio.MakeBucketArgs
-import io.minio.MinioClient
-import io.minio.UploadObjectArgs
-import io.minio.errors.MinioException
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.context.properties.EnableConfigurationProperties
+import com.api.demo.model.FileModel
+import com.api.demo.repository.FileRepository
+import com.api.demo.repository.FilesDAO
 import org.springframework.stereotype.Service
+import java.util.*
 
 
 @Service
-@EnableConfigurationProperties
-class FilesService() {
+class FilesService(private val fileRepository: FileRepository, private val filesDAO: FilesDAO) {
 
-    @Value("\${minio.url}")
-    private val minioUrl: String = ""
-    @Value("\${minio.bucket}")
-    private val minioBucket: String = ""
-    @Value("\${minio.access-key}")
-    private val minioAccessKey: String = ""
-    @Value("\${minio.secret-key}")
-    private val minioSecretKey: String = ""
-    private var minioClient: MinioClient? = null
+    fun addDocument(document: ByteArray, fileName: String, extType: String, contentType: String, size: Long): FileModel {
+            val fileUUID = UUID.randomUUID().toString()
+            val filePath = "files/${fileUUID}/${fileName}"
+            fileRepository.putDocument(filePath, document)
 
-    fun connect(){
-        if(minioClient == null) {
-            try {
-                // Create a minioClient with the MinIO server playground, its access key and secret key.
-                minioClient = MinioClient.builder()
-                    .endpoint(minioUrl)
-                    .credentials(minioAccessKey, minioSecretKey)
-                    .build()
-
-                // Make 'fus' bucket if not exist.
-                val found = minioClient?.bucketExists(BucketExistsArgs.builder().bucket(minioBucket).build())
-                if (!found!!) {
-                    // Make a new bucket called 'fus'.
-                    minioClient?.makeBucket(MakeBucketArgs.builder().bucket(minioBucket).build())
-                } else {
-                    println("Bucket '${minioBucket}' already exists.")
-                }
-
-            } catch (e: MinioException) {
-                println("Error occurred: $e")
-                println("HTTP trace: " + e.httpTrace())
-            }
-        }
+            val filesModel = FileModel(
+                fileId = filesDAO.getNewFileId(),
+                filePath = filePath,
+                fileName = fileName,
+                extType = extType,
+                fileUUID = fileUUID,
+                contentType = contentType,
+                fileSize = size
+            )
+            filesDAO.saveFile(filesModel)
+            return filesModel
     }
 
-    fun uploadFile(filename: String, objectName: String ) {
-        if (minioClient != null) {
-            minioClient?.uploadObject(
-                UploadObjectArgs.builder()
-                    .bucket(minioBucket)
-                    .`object`(objectName)
-                    .filename(filename)
-                    .build()
-            )
-            println(
-                "$filename is successfully uploaded as object $objectName to bucket $minioBucket."
-            )
-        }
-    }
+    fun getExtType(fileName: String): String {
+        var ext = ""
 
+        val i = fileName.lastIndexOf('.')
+        if (i > 0) {
+            ext = fileName.substring(i + 1)
+        }
+        return ext
+    }
 }

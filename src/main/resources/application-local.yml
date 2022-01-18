@@ -1,3 +1,10 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500000MB
+      max-request-size: 500000MB
+
 #Spring Cloud
 spring.cloud.config.uri: http://localhost:8888
 spring.cloud.config.username: configuser
