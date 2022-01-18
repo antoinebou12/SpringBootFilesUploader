@@ -1,16 +1,18 @@
 package com.api.demo.repository
 
 import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.model.ObjectListing
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
+import com.amazonaws.services.s3.model.S3ObjectSummary
 import com.amazonaws.util.IOUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
-import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
+
 
 @Component
 class FileS3: FileRepository {
@@ -32,13 +34,6 @@ class FileS3: FileRepository {
         }
     }
 
-    override fun putPhoto(photoId: String, photo: ByteArray) {
-        val metadata = ObjectMetadata()
-        metadata.contentLength = photo.size.toLong()
-        metadata.contentType = MediaType.IMAGE_JPEG_VALUE
-        awsClient.putObject(PutObjectRequest(s3BucketName, photoId, photo.inputStream(), metadata))
-    }
-
     override fun putDocument(documentId: String, document: ByteArray) {
         val metadata = ObjectMetadata()
         metadata.contentLength = document.size.toLong()
@@ -46,11 +41,7 @@ class FileS3: FileRepository {
     }
 
 
-    override fun getPhoto(id: String): ByteArray? {
-        return getObject(id)
-    }
-
-    override fun getPhotos(ids: Collection<String>): Map<String, ByteArray> {
+    override fun getDocuments(ids: Collection<String>): Map<String, ByteArray> {
         val objectsMap = mutableMapOf<String, ByteArray>()
         for (id in ids) {
             getObject(id)?.let {
@@ -74,4 +65,6 @@ class FileS3: FileRepository {
     override fun getDocument(id: String): ByteArray? {
         return getObject(id)
     }
+
+
 }

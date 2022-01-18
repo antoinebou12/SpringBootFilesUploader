@@ -1,11 +1,16 @@
 package com.api.demo.controller
 
 import com.api.demo.constants.*
+import com.api.demo.controller.dto.BasicDTO
 import com.api.demo.controller.dto.FileDTO
 import com.api.demo.service.FilesService
 import org.slf4j.LoggerFactory
+import org.springframework.core.io.Resource
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.util.regex.Matcher
@@ -48,4 +53,14 @@ class FilesController(val filesService: FilesService){
             HttpStatus.OK)
     }
 
+    @GetMapping("/document/{id}")
+    fun getDocument(@PathVariable("id") id: String) : ResponseEntity<Resource>  {
+        val document = filesService.getDocumentData(id)!!
+        val documentInfo = filesService.getDocumentInfo(id)!!
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + documentInfo.fileName)
+                .contentLength(documentInfo.fileSize)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(document)
+    }
 }

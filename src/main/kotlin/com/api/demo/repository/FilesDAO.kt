@@ -16,13 +16,25 @@ class FilesDAO(private val mongoTemplate: MongoTemplate) {
     fun getFile(id: String): FileModel? {
         return mongoTemplate.findOne(
             Query.query((Criteria
-            .where("id").`is`(id))), FileModel::class.java)
+            .where("fileId").`is`(id))), FileModel::class.java)
+    }
+
+    fun getFileByFileName(fileName: String): FileModel? {
+        return mongoTemplate.findOne(
+            Query.query((Criteria
+                .where("fileName").`is`(fileName))), FileModel::class.java)
+    }
+
+    fun getFileByUUID(uuid: String): FileModel? {
+        return mongoTemplate.findOne(
+            Query.query((Criteria
+                .where("fileUUID").`is`(uuid))), FileModel::class.java)
     }
 
     fun removeFile(id: String): FileModel? {
         return mongoTemplate.findAndRemove(
             Query.query((Criteria
-            .where("id").`is`(id))), FileModel::class.java)
+            .where("fileId").`is`(id))), FileModel::class.java)
     }
 
     fun getNewFileId(): String {
