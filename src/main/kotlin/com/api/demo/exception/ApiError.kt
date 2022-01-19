@@ -7,7 +7,8 @@ import kotlin.reflect.KClass
 data class ApiError(
     val code: String = GenericErrors.UNKNOWN._code,
     val message: String = GenericErrors.UNKNOWN._message,
-    val timestamp: Date = Date())
+    val timestamp: Date = Date()
+)
 
 interface ApiErrorInterface {
     fun getHttpStatus(): HttpStatus
@@ -44,11 +45,16 @@ enum class GenericErrors(val _httpStatus: HttpStatus, val _code: String, val _me
 class ApiException : Exception {
     private val apiError: ApiErrorInterface
     private val exception: Exception?
-    constructor(apiErrorInterface: ApiErrorInterface): super(apiErrorInterface.getMessage()) {
+
+    constructor(apiErrorInterface: ApiErrorInterface) : super(apiErrorInterface.getMessage()) {
         this.apiError = apiErrorInterface
         this.exception = null
     }
-    constructor(apiErrorInterface: ApiErrorInterface, exception: Exception): super(apiErrorInterface.getMessage(), exception) {
+
+    constructor(apiErrorInterface: ApiErrorInterface, exception: Exception) : super(
+        apiErrorInterface.getMessage(),
+        exception
+    ) {
         this.apiError = apiErrorInterface
         this.exception = exception
     }

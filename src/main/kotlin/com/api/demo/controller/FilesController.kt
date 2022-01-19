@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 
 @RestController
 @RequestMapping("/files")
-class FilesController(val filesService: FilesService){
+class FilesController(val filesService: FilesService) {
 
     private val log = LoggerFactory.getLogger(FilesController::class.java)
     private val docFileExtensionPattern: Pattern = Pattern.compile(DOC_FILE_EXTENSION_REGEX)
@@ -44,23 +44,26 @@ class FilesController(val filesService: FilesService){
             fileName = document.originalFilename!!,
             extType = filesService.getExtType(document.originalFilename!!),
             contentType = document.contentType!!,
-            size = document.size!!)
+            size = document.size!!
+        )
 
         return ResponseEntity(
             FileDTO(
-            fileId = newFileModel.fileId,
-            fileName = newFileModel.fileName),
-            HttpStatus.OK)
+                fileId = newFileModel.fileId,
+                fileName = newFileModel.fileName
+            ),
+            HttpStatus.OK
+        )
     }
 
     @GetMapping("/document/{id}")
-    fun getDocument(@PathVariable("id") id: String) : ResponseEntity<Resource>  {
+    fun getDocument(@PathVariable("id") id: String): ResponseEntity<Resource> {
         val document = filesService.getDocumentData(id)!!
         val documentInfo = filesService.getDocumentInfo(id)!!
-            return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + documentInfo.fileName)
-                .contentLength(documentInfo.fileSize)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(document)
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + documentInfo.fileName)
+            .contentLength(documentInfo.fileSize)
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(document)
     }
 }

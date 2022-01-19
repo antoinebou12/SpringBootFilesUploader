@@ -16,14 +16,23 @@ class BasicDAO(private val mongoTemplate: MongoTemplate) {
     }
 
     fun getBasic(requestId: String): BasicModel? {
-        return mongoTemplate.findOne(Query.query((Criteria
-            .where("id").`is`(requestId))), BasicModel::class.java)
+        return mongoTemplate.findOne(
+            Query.query(
+                (Criteria
+                    .where("id").`is`(requestId))
+            ), BasicModel::class.java
+        )
     }
 
     fun removeBasic(requestId: String): BasicModel? {
-        return mongoTemplate.findAndRemove(Query.query((Criteria
-            .where("id").`is`(requestId))), BasicModel::class.java)
+        return mongoTemplate.findAndRemove(
+            Query.query(
+                (Criteria
+                    .where("id").`is`(requestId))
+            ), BasicModel::class.java
+        )
     }
+
     fun findAndModifiedBasic(basicModel: BasicModel): BasicModel? {
         val query = Query()
             .addCriteria(Criteria.where("id").`is`(basicModel.id))
@@ -32,15 +41,25 @@ class BasicDAO(private val mongoTemplate: MongoTemplate) {
             .set("number", basicModel.number)
             .set("message", basicModel.message)
 
-        return mongoTemplate.findAndModify(query, update, FindAndModifyOptions().returnNew(true), BasicModel::class.java)
+        return mongoTemplate.findAndModify(
+            query,
+            update,
+            FindAndModifyOptions().returnNew(true),
+            BasicModel::class.java
+        )
     }
 
-    fun findAndModifiedPartialBasic(id:String, key: String, value: Any): BasicModel? {
+    fun findAndModifiedPartialBasic(id: String, key: String, value: Any): BasicModel? {
         val query = Query()
             .addCriteria(Criteria.where("id").`is`(id))
         val update = Update()
             .set(key, value)
 
-        return mongoTemplate.findAndModify(query, update, FindAndModifyOptions().returnNew(true), BasicModel::class.java)
+        return mongoTemplate.findAndModify(
+            query,
+            update,
+            FindAndModifyOptions().returnNew(true),
+            BasicModel::class.java
+        )
     }
 }

@@ -32,7 +32,12 @@ class S3Config {
 
         return AmazonS3ClientBuilder
             .standard()
-            .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration(s3ServiceEndpoint, Regions.US_EAST_1.name))
+            .withEndpointConfiguration(
+                AwsClientBuilder.EndpointConfiguration(
+                    s3ServiceEndpoint,
+                    Regions.US_EAST_1.name
+                )
+            )
             .withPathStyleAccessEnabled(true)
             .withCredentials(AWSStaticCredentialsProvider(credentials))
             .build()

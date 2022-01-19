@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class FileS3: FileRepository {
+class FileS3 : FileRepository {
     @Autowired
     lateinit var awsClient: AmazonS3
 

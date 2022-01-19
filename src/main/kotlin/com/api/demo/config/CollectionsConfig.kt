@@ -15,6 +15,7 @@ class CollectionsConfig(private val mongoTemplate: MongoTemplate) {
     @EventListener(ApplicationReadyEvent::class)
     fun initIndexes() {
         //24h TTL
-        mongoTemplate.indexOps(BasicModel::class.java).ensureIndex(Index().on("generatedAt", Sort.Direction.ASC).expire(86400))
+        mongoTemplate.indexOps(BasicModel::class.java)
+            .ensureIndex(Index().on("generatedAt", Sort.Direction.ASC).expire(86400))
     }
 }

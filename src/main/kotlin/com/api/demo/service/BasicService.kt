@@ -30,14 +30,13 @@ class BasicService(private val basicDAO: BasicDAO) {
         return basicDAO.findAndModifiedBasic(basicModel)
     }
 
-    fun modifyPartialBasic(id:String, key: String, value: Any): BasicModel? {
+    fun modifyPartialBasic(id: String, key: String, value: Any): BasicModel? {
         return basicDAO.findAndModifiedPartialBasic(id, key, value)
     }
 
     fun removeBasicRequest(id: String): BasicModel? {
         return basicDAO.removeBasic(id)
     }
-
 
 
 }
