@@ -1,16 +1,15 @@
 package com.api.demo.controller
 
-import com.api.demo.constants.*
-import com.api.demo.controller.dto.BasicDTO
+import com.api.demo.constants.DOC_FILE_EXTENSION_REGEX
+import com.api.demo.constants.MAX_DOCUMENT_FILE_SIZE
 import com.api.demo.controller.dto.FileDTO
 import com.api.demo.service.FilesService
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
+import org.springframework.http.MediaType.parseMediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.util.regex.Matcher
@@ -22,6 +21,7 @@ class FilesController(val filesService: FilesService) {
 
     private val log = LoggerFactory.getLogger(FilesController::class.java)
     private val docFileExtensionPattern: Pattern = Pattern.compile(DOC_FILE_EXTENSION_REGEX)
+
 
     @PostMapping("/documents")
     fun addDocument(@RequestPart("document") document: MultipartFile?): ResponseEntity<FileDTO> {
@@ -63,7 +63,7 @@ class FilesController(val filesService: FilesService) {
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + documentInfo.fileName)
             .contentLength(documentInfo.fileSize)
-            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .contentType(parseMediaType(documentInfo.contentType))
             .body(document)
     }
 }

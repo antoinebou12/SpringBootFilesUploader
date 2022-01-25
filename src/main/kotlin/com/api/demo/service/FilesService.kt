@@ -4,7 +4,6 @@ import com.api.demo.model.FileModel
 import com.api.demo.repository.FileRepository
 import com.api.demo.repository.FilesDAO
 import org.springframework.core.io.ByteArrayResource
-import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 import java.util.*
 

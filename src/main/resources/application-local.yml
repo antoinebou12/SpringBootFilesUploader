@@ -19,11 +19,14 @@ spring.data.mongodb.uri: mongodb://localhost:27017/demo?waitQueueMultiple=10&max
 # JWT Signing Key
 jwt.signing.key: 123
 
-# Minio Host
-minio.url: http://localhost:9000
-# Minio Bucket name for your application
-minio.bucket: fus
+#S3
 # Minio access key (login)
-minio.access-key: minioadmin
+s3.access.key: minioadmin
 # Minio secret key (password)
-minio.secret-key: minioadmin
+s3.secret.key: minioadmin
+# Minio Host
+s3.service.endpoint: http://localhost:9000
+s3.bucket.name: fus
+
+docker:
+  host: tcp://127.0.0.1:2375

@@ -1,8 +1,8 @@
 package com.api.demo.controller.dto;
 
-import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.DecimalMax
+import javax.validation.constraints.DecimalMin
+import javax.validation.constraints.NotEmpty
 
 data class BasicDTO(
     @field:NotEmpty

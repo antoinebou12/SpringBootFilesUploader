@@ -1,6 +1,5 @@
 package com.api.demo.controller.dto
 
-import com.api.demo.model.FileModel
 import org.springframework.data.annotation.TypeAlias
 import javax.validation.constraints.NotEmpty
 
