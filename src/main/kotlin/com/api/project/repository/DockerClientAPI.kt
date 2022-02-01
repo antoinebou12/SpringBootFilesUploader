@@ -3,7 +3,8 @@ package com.api.project.repository;
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.CreateContainerResponse
 import com.github.dockerjava.api.command.InspectContainerResponse
-import com.github.dockerjava.api.command.RenameContainerCmd
+import com.github.dockerjava.api.command.PullImageCmd
+import com.github.dockerjava.api.command.PullImageResultCallback
 import com.github.dockerjava.api.model.*
 import com.github.dockerjava.core.command.LogContainerResultCallback
 import org.slf4j.LoggerFactory
@@ -19,6 +20,10 @@ class DockerClientAPI {
     @Autowired
     lateinit var dockerClient: DockerClient
 
+    fun dockerVersion(): Version? {
+        return dockerClient.versionCmd().exec()
+    }
+
     fun testConnection() {
         dockerClient.pingCmd().exec()
     }
@@ -27,16 +32,28 @@ class DockerClientAPI {
         return dockerClient.listContainersCmd().exec()
     }
 
+    fun pullContainer(image: String): PullImageResultCallback? {
+        val resultCallback: PullImageResultCallback = object : PullImageResultCallback() {
+            override fun onNext(item: PullResponseItem) {
+                if (item.status != null) {
+                    log.info("{} : {}", item.id, item.status)
+                }
+                super.onNext(item)
+            }
+
+            override fun onComplete() {
+                super.onComplete()
+            }
+        }
+        return dockerClient.pullImageCmd(image)?.exec(resultCallback)
+    }
+
     fun createContainer(image: String): CreateContainerResponse? {
         return dockerClient.createContainerCmd(image).exec()
     }
 
     fun infoContainer(id: String): Info? {
         return dockerClient.infoCmd().exec()
-    }
-
-    fun dockerVersion(): Version? {
-        return dockerClient.versionCmd().exec()
     }
 
     fun inspectContainer(id: String): InspectContainerResponse? {
@@ -73,7 +90,7 @@ class DockerClientAPI {
     }
 
     fun renameContainer(id: String, name: String): Void? {
-        return dockerClient.renameContainerCmd(id).exec()
+        return dockerClient.renameContainerCmd(id).withName(name).exec()
     }
 
     fun pruneSystem() {
@@ -84,5 +101,9 @@ class DockerClientAPI {
         dockerClient.pruneCmd(PruneType.NETWORKS).exec()
     }
 
+
+    fun searchImagesContainer(imageName: String): MutableList<SearchItem>? {
+        return dockerClient.searchImagesCmd(imageName).exec()
+    }
 
 }

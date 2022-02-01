@@ -1,9 +1,11 @@
 package com.api.project.controller.dto;
 
+import org.springframework.data.annotation.TypeAlias
 import javax.validation.constraints.DecimalMax
 import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.NotEmpty
 
+@TypeAlias("BasicDTO")
 data class BasicDTO(
     @field:NotEmpty
     val requestId: String,

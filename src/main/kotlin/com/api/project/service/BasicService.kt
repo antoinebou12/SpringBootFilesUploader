@@ -1,7 +1,7 @@
 package com.api.project.service
 
 import com.api.project.model.BasicModel
-import com.api.project.repository.BasicDAO
+import com.api.project.repository.dao.BasicDAO
 import org.springframework.stereotype.Service
 
 @Service

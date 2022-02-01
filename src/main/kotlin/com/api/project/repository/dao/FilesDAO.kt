@@ -1,4 +1,4 @@
-package com.api.project.repository
+package com.api.project.repository.dao
 
 import com.api.project.model.FileModel
 import org.springframework.data.mongodb.core.MongoTemplate

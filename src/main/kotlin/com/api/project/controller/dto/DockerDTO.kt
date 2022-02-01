@@ -8,7 +8,6 @@ import javax.validation.constraints.NotEmpty
 data class DockerDTO(
     @field:NotEmpty
     val id: String,
-    @field:NotEmpty
     val containerId: String,
     val containerName: String,
     val containerImage: String,

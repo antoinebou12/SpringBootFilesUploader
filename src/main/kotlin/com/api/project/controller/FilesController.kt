@@ -56,7 +56,7 @@ class FilesController(val filesService: FilesService) {
         )
     }
 
-    @RequestMapping(method = [RequestMethod.GET], value = ["/document/{id}"])
+    @RequestMapping(method = [RequestMethod.GET], value = ["/{id}"])
     fun getDocument(@PathVariable("id") id: String): ResponseEntity<Resource> {
         val document = filesService.getDocumentData(id)!!
         val documentInfo = filesService.getDocumentInfo(id)!!

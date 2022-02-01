@@ -1,7 +1,6 @@
-package com.api.project.repository
+package com.api.project.repository.dao
 
 import com.api.project.model.DockerModel
-import com.api.project.model.FileModel
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
