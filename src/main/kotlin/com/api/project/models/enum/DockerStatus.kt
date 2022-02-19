@@ -1,4 +1,4 @@
-package com.api.project.model.enum
+package com.api.project.models.enum
 
 enum class DockerStatus {
     CONTAINER_CREATED,

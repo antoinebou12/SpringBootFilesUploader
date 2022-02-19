@@ -1,4 +1,4 @@
-package com.api.project.service;
+package com.api.project.service
 
 import org.apache.sshd.client.SshClient
 import org.apache.sshd.client.channel.ClientChannelEvent
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 class SSHService {
 
     fun startSSH(username: String, password: String, host: String, port: Int, command: String): String {
-        val cli =  command + "\n"
+        val cli = command + "\n"
         val defaultTimeoutSeconds = 10L
         val client = SshClient.setUpDefaultClient()
         client.start()
@@ -29,14 +29,14 @@ class SSHService {
                             session.createChannel(Channel.CHANNEL_SHELL).use { channel ->
                                 channel.setOut(responseStream)
                                 channel.setErr(errorResponseStream)
-                                return channel.use { channel ->
-                                    channel.open()
+                                return channel.use {
+                                    it.open()
                                         .verify(defaultTimeoutSeconds, TimeUnit.SECONDS)
-                                    channel.invertedIn.use { pipedIn ->
+                                    it.invertedIn.use { pipedIn ->
                                         pipedIn.write(cli.toByteArray())
                                         pipedIn.flush()
                                     }
-                                    channel.waitFor(
+                                    it.waitFor(
                                         EnumSet.of(ClientChannelEvent.CLOSED),
                                         TimeUnit.SECONDS.toMillis(defaultTimeoutSeconds)
                                     )

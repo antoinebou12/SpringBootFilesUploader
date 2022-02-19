@@ -1,12 +1,10 @@
-package com.api.project.repository;
+package com.api.project.repository
 
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.CreateContainerResponse
 import com.github.dockerjava.api.command.InspectContainerResponse
-import com.github.dockerjava.api.command.PullImageCmd
 import com.github.dockerjava.api.command.PullImageResultCallback
 import com.github.dockerjava.api.model.*
-import com.github.dockerjava.core.command.LogContainerResultCallback
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -41,9 +39,6 @@ class DockerClientAPI {
                 super.onNext(item)
             }
 
-            override fun onComplete() {
-                super.onComplete()
-            }
         }
         return dockerClient.pullImageCmd(image)?.exec(resultCallback)
     }
@@ -61,20 +56,21 @@ class DockerClientAPI {
     }
 
     fun getDockerLogs(id: String): List<String>? {
-        val logs: MutableList<String> = ArrayList()
-        val logContainerCmd = dockerClient.logContainerCmd(id)
-        logContainerCmd.withStdOut(true).withStdErr(true)
-        logContainerCmd.withTimestamps(true)
-        try {
-            logContainerCmd.exec(object : LogContainerResultCallback() {
-                override fun onNext(item: Frame) {
-                    logs.add(item.toString())
-                }
-            }).awaitCompletion()
-        } catch (e: InterruptedException) {
-            println("Interrupted Exception!" + e.message)
-        }
-        return logs
+//        val logs: MutableList<String> = ArrayList()
+//        val logContainerCmd = dockerClient.logContainerCmd(id)
+//        logContainerCmd.withStdOut(true).withStdErr(true)
+//        logContainerCmd.withTimestamps(true)
+//        try {
+//            logContainerCmd.exec(object : LogContainerResultCallback() {
+//                override fun onNext(item: Frame) {
+//                    logs.add(item.toString())
+//                }
+//            }).awaitCompletion()
+//        } catch (e: InterruptedException) {
+//            println("Interrupted Exception!" + e.message)
+//        }
+//        return logs
+        return null
     }
 
     fun stopContainer(id: String): Void? {

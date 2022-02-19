@@ -1,7 +1,6 @@
 package com.api.project.controller
 
 import com.api.project.constants.DOC_FILE_EXTENSION_REGEX
-import com.api.project.constants.MAX_DOCUMENT_FILE_SIZE
 import com.api.project.controller.dto.FileDTO
 import com.api.project.service.FilesService
 import org.slf4j.LoggerFactory
@@ -10,6 +9,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.parseMediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.util.regex.Matcher
@@ -22,7 +22,7 @@ class FilesController(val filesService: FilesService) {
     private val log = LoggerFactory.getLogger(FilesController::class.java)
     private val docFileExtensionPattern: Pattern = Pattern.compile(DOC_FILE_EXTENSION_REGEX)
 
-
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @RequestMapping(method = [RequestMethod.POST], value = ["/documents"])
     fun addDocument(@RequestPart("document") document: MultipartFile?): ResponseEntity<FileDTO> {
         if (document == null) {
@@ -35,9 +35,9 @@ class FilesController(val filesService: FilesService) {
             throw Exception("Document [$fileName] received has an unsupported extension type.")
         }
 
-        if (document.size > MAX_DOCUMENT_FILE_SIZE) {
-            throw Exception("Document [$fileName] received has a file size greater than $MAX_DOCUMENT_FILE_SIZE MB.")
-        }
+//        if (document.size > MAX_DOCUMENT_FILE_SIZE) {
+//            throw Exception("Document [$fileName] received has a file size greater than $MAX_DOCUMENT_FILE_SIZE MB.")
+//        }
 
         val newFileModel = filesService.addDocument(
             document = document.bytes,
@@ -56,6 +56,7 @@ class FilesController(val filesService: FilesService) {
         )
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @RequestMapping(method = [RequestMethod.GET], value = ["/{id}"])
     fun getDocument(@PathVariable("id") id: String): ResponseEntity<Resource> {
         val document = filesService.getDocumentData(id)!!

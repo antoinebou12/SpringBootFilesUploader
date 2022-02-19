@@ -1,4 +1,3 @@
-package com.api.project.service;
+package com.api.project.service
 
-public class DockerComposeService {
-}
+class DockerComposeService

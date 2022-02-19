@@ -21,7 +21,7 @@ class SpringFoxConfig {
     }
 
     private fun paths(): Predicate<String?>? {
-        return regex("/*");
+        return regex("/*")
     }
 
     private fun apiInfo(): ApiInfo? {

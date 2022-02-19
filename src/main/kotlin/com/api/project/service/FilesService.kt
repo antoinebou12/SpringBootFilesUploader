@@ -1,6 +1,6 @@
 package com.api.project.service
 
-import com.api.project.model.FileModel
+import com.api.project.models.FileModel
 import com.api.project.repository.FileRepository
 import com.api.project.repository.dao.FilesDAO
 import org.springframework.core.io.ByteArrayResource

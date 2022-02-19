@@ -6,29 +6,14 @@ spring:
       max-request-size: 500000MB
   profiles:
     active: local
-  jackson:
-    serialization:
-      indent_output: true
-management:
-  endpoints:
-    web:
-      exposure:
-        include: [ "health", "info", "refresh", "env", "metrics" ]
 
-#Spring Cloud
-spring.cloud.config.uri: http://localhost:8888
-spring.cloud.config.username: configuser
-spring.cloud.config.password: Secret123
-
-spring.security.user.name: user
-spring.security.user.password: pass
+jwt:
+  clientId: user
+  jwtSecret: secret
+  jwtExpirationMs: 86400000
 
 # Mongodb connection
-spring.data.mongodb.uri: mongodb://localhost:27017/demo?waitQueueMultiple=10&maxPoolSize=150
-
-# JWT Signing Key
-jwt.signing.key: 123
-
+spring.data.mongodb.uri: mongodb://localhost:27017/demo
 
 #S3
 # Minio access key (login)

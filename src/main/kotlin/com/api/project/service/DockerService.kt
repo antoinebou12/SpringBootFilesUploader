@@ -1,6 +1,6 @@
 package com.api.project.service
 
-import com.api.project.model.DockerModel
+import com.api.project.models.DockerModel
 import com.api.project.repository.DockerClientAPI
 import com.api.project.repository.dao.DockerDAO
 import com.nimbusds.jose.shaded.json.JSONArray
@@ -19,7 +19,7 @@ class DockerService(private val dockerClient: DockerClientAPI, private val docke
         val listContainerOriginal = dockerClient.listContainers()
         val containersInfo = JSONArray()
 
-        listContainerOriginal.forEach{
+        listContainerOriginal.forEach {
             val container = JSONObject()
 
             container["id"] = it.id
@@ -65,7 +65,6 @@ class DockerService(private val dockerClient: DockerClientAPI, private val docke
         dockerClient.inspectContainer(id)
         return null
     }
-
 
 
 }

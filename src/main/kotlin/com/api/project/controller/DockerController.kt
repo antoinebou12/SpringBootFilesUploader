@@ -1,11 +1,11 @@
 package com.api.project.controller
 
-import com.api.project.model.DockerModel
+import com.api.project.models.DockerModel
 import com.api.project.service.DockerService
 import com.nimbusds.jose.shaded.json.JSONArray
-import com.nimbusds.jose.shaded.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -65,7 +65,11 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/rename/{name}/{newName}"])
-    fun renameContainer(@PathVariable("name") name: String, @PathVariable("newName") newName: String): ResponseEntity<String> {
+    @PreAuthorize("hasRole('ADMIN')")
+    fun renameContainer(
+        @PathVariable("name") name: String,
+        @PathVariable("newName") newName: String
+    ): ResponseEntity<String> {
         dockerService.restartContainer(name)
         return ResponseEntity(
             "Rename Container $name $newName",

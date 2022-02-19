@@ -1,4 +1,4 @@
-package com.api.project.config;
+package com.api.project.config
 
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.core.DefaultDockerClientConfig
@@ -16,7 +16,7 @@ import java.time.Duration
 class DockerConfig {
 
     @Value("\${docker.host}")
-    val dockerHost = "";
+    val dockerHost = ""
 
     @Bean
     fun dockerClient(): DockerClient? {
@@ -32,8 +32,8 @@ class DockerConfig {
                 .build()
 
             val httpClient: DockerHttpClient = ApacheDockerHttpClient.Builder()
-                .dockerHost(dockerConfig.getDockerHost())
-                .sslConfig(dockerConfig.getSSLConfig())
+                .dockerHost(dockerConfig.dockerHost)
+                .sslConfig(dockerConfig.sslConfig)
                 .maxConnections(100)
                 .connectionTimeout(Duration.ofSeconds(30))
                 .responseTimeout(Duration.ofSeconds(45))
@@ -41,11 +41,11 @@ class DockerConfig {
 
             val dockerClient = DockerClientImpl.getInstance(dockerConfig, httpClient)
 
-            dockerClient.pingCmd().exec();
+            dockerClient.pingCmd().exec()
             return dockerClient
         } catch (e: Exception) {
             System.out.println(e)
-            return null;
+            return null
         }
 
     }

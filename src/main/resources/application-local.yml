@@ -9,16 +9,6 @@ spring:
 spring.cloud.config.uri: http://localhost:8888
 spring.cloud.config.username: configuser
 spring.cloud.config.password: Secret123
-
-spring.security.user.name: user
-spring.security.user.password: pass
-
-# Mongodb connection
-spring.data.mongodb.uri: mongodb://localhost:27017/demo?waitQueueMultiple=10&maxPoolSize=150
-
-# JWT Signing Key
-jwt.signing.key: 123
-
 #S3
 # Minio access key (login)
 s3.access.key: minioadmin
