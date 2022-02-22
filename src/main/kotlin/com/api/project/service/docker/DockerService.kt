@@ -1,15 +1,15 @@
-package com.api.project.service
+package com.api.project.service.docker
 
 import com.api.project.models.DockerModel
-import com.api.project.repository.DockerClientAPI
-import com.api.project.repository.dao.DockerDAO
+import com.api.project.repository.docker.DockerClientAPI
+import com.api.project.repository.docker.DockerMongo
 import com.nimbusds.jose.shaded.json.JSONArray
 import com.nimbusds.jose.shaded.json.JSONObject
 import org.springframework.stereotype.Service
 
 
 @Service
-class DockerService(private val dockerClient: DockerClientAPI, private val dockerDAO: DockerDAO) {
+class DockerService(private val dockerClient: DockerClientAPI, private val dockerMongo: DockerMongo) {
 
     fun getPingDockerAPI() {
         return dockerClient.testConnection()

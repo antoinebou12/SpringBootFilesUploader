@@ -15,14 +15,27 @@ jwt:
 # Mongodb connection
 spring.data.mongodb.uri: mongodb://localhost:27017/demo
 
-#S3
 # Minio access key (login)
-s3.access.key: minioadmin
-# Minio secret key (password)
-s3.secret.key: minioadmin
-# Minio Host
-s3.service.endpoint: http://localhost:9000
-s3.bucket.name: fus
+s3:
+  access.key: minioadmin
+  # Minio secret key (password)
+  secret.key: minioadmin
+  # Minio Host
+  service.endpoint: http://localhost:9000
+  bucket.name: fus
 
+#Docker API
 docker:
   host: tcp://127.0.0.1:2375
+
+# Caddy API
+caddy:
+  host: localhost:2019
+
+# Documentation
+springdoc:
+  swagger-ui:
+    path: /api-docs
+  api-docs:
+    enabled: true
+  version: 0.0.3

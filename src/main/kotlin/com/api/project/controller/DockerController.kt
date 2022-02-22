@@ -1,7 +1,7 @@
 package com.api.project.controller
 
 import com.api.project.models.DockerModel
-import com.api.project.service.DockerService
+import com.api.project.service.docker.DockerService
 import com.nimbusds.jose.shaded.json.JSONArray
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -22,6 +22,7 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.GET], value = ["/list"])
+    @PreAuthorize("hasRole('MOD') or hasRole('ADMIN')")
     fun getListContainers(): ResponseEntity<JSONArray> {
         return ResponseEntity(
             dockerService.getListContainers(),
@@ -30,6 +31,7 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.PUT], value = ["/create"])
+    @PreAuthorize("hasRole('ADMIN')")
     fun createContainer(@RequestBody imageName: String): ResponseEntity<DockerModel> {
         return ResponseEntity(
             dockerService.createContainer(imageName),
@@ -38,6 +40,7 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/start/{name}"])
+    @PreAuthorize("hasRole('MOD') or hasRole('ADMIN')")
     fun startContainer(@PathVariable("name") name: String): ResponseEntity<String> {
         dockerService.startContainer(name)
         return ResponseEntity(
@@ -47,6 +50,7 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/stop/{name}"])
+    @PreAuthorize("hasRole('MOD') or hasRole('ADMIN')")
     fun stopContainer(@PathVariable("name") name: String): ResponseEntity<String> {
         dockerService.stopContainer(name)
         return ResponseEntity(
@@ -56,6 +60,7 @@ class DockerController(val dockerService: DockerService) {
     }
 
     @RequestMapping(method = [RequestMethod.POST], value = ["/restart/{name}"])
+    @PreAuthorize("hasRole('MOD') or hasRole('ADMIN')")
     fun restartContainer(@PathVariable("name") name: String): ResponseEntity<String> {
         dockerService.restartContainer(name)
         return ResponseEntity(

@@ -1,8 +1,8 @@
 package com.api.project.config
 
-import com.api.project.service.UserDetailsServiceImpl
 import com.api.project.service.jwt.AuthEntryPointJwt
 import com.api.project.service.jwt.AuthTokenFilter
+import com.api.project.service.jwt.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -72,7 +72,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         http.cors().and().csrf().disable()
             .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .authorizeRequests().antMatchers("/auth/**").permitAll()
+            .authorizeRequests().antMatchers("/auth/**", "/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated()
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }

@@ -7,8 +7,8 @@ import com.api.project.controller.dto.response.MessageResponse
 import com.api.project.models.RoleModel
 import com.api.project.models.UserModel
 import com.api.project.models.enum.ERole
-import com.api.project.repository.RoleRepository
-import com.api.project.repository.UserRepository
+import com.api.project.repository.user.RoleRepository
+import com.api.project.repository.user.UserRepository
 import com.api.project.service.jwt.JwtUtils
 import com.api.project.service.jwt.UserDetailsImpl
 import org.springframework.beans.factory.annotation.Autowired
@@ -86,13 +86,13 @@ class AuthController {
         strRoles.forEach(Consumer { role: String? ->
             when (role) {
                 "mod" -> {
-                    var modRole: RoleModel? = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                    val modRole: RoleModel? = roleRepository.findByName(ERole.ROLE_MODERATOR)
                     if (modRole != null) {
                         roles.add(modRole)
                     }
                 }
                 else -> {
-                    var userRole: RoleModel? = roleRepository.findByName(ERole.ROLE_USER)
+                    val userRole: RoleModel? = roleRepository.findByName(ERole.ROLE_USER)
                     if (userRole != null) {
                         roles.add(userRole)
                     }
@@ -128,9 +128,9 @@ class AuthController {
 
         val roles: MutableSet<RoleModel> = HashSet()
 
-        var adminRole: RoleModel? = roleRepository.findByName(ERole.ROLE_ADMIN)
-        var modRole: RoleModel? = roleRepository.findByName(ERole.ROLE_MODERATOR)
-        var userRole: RoleModel? = roleRepository.findByName(ERole.ROLE_USER)
+        val adminRole: RoleModel? = roleRepository.findByName(ERole.ROLE_ADMIN)
+        val modRole: RoleModel? = roleRepository.findByName(ERole.ROLE_MODERATOR)
+        val userRole: RoleModel? = roleRepository.findByName(ERole.ROLE_USER)
 
         if (adminRole != null) {
             roles.add(adminRole)

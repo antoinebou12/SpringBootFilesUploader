@@ -1,6 +1,5 @@
 package com.api.project.service.jwt
 
-import com.api.project.service.UserDetailsServiceImpl
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

@@ -1,4 +1,4 @@
-package com.api.project.repository.dao
+package com.api.project.repository.file
 
 import com.api.project.models.FileModel
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-class FilesDAO(private val mongoTemplate: MongoTemplate) {
+class FilesMongo(private val mongoTemplate: MongoTemplate) {
 
     fun saveFile(filesModel: FileModel): FileModel {
         return mongoTemplate.save(filesModel)

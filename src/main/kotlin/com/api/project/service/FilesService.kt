@@ -1,15 +1,15 @@
 package com.api.project.service
 
 import com.api.project.models.FileModel
-import com.api.project.repository.FileRepository
-import com.api.project.repository.dao.FilesDAO
+import com.api.project.repository.file.FileRepository
+import com.api.project.repository.file.FilesMongo
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.stereotype.Service
 import java.util.*
 
 
 @Service
-class FilesService(private val fileRepository: FileRepository, private val filesDAO: FilesDAO) {
+class FilesService(private val fileRepository: FileRepository, private val filesMongo: FilesMongo) {
 
     fun addDocument(
         document: ByteArray,
@@ -24,7 +24,7 @@ class FilesService(private val fileRepository: FileRepository, private val files
         fileRepository.putDocument(filePath, document)
 
         val filesModel = FileModel(
-            fileId = filesDAO.getNewFileId(),
+            fileId = filesMongo.getNewFileId(),
             filePath = filePath,
             fileName = fileName,
             extType = extType,
@@ -32,17 +32,17 @@ class FilesService(private val fileRepository: FileRepository, private val files
             contentType = contentType,
             fileSize = size
         )
-        filesDAO.saveFile(filesModel)
+        filesMongo.saveFile(filesModel)
         return filesModel
     }
 
     fun getDocumentData(id: String): ByteArrayResource? {
-        val document = filesDAO.getFile(id)?.filePath?.let { fileRepository.getDocument(it) }
+        val document = filesMongo.getFile(id)?.filePath?.let { fileRepository.getDocument(it) }
         return document?.let { ByteArrayResource(it) }
     }
 
     fun getDocumentInfo(id: String): FileModel? {
-        return filesDAO.getFile(id)
+        return filesMongo.getFile(id)
     }
 
     fun getExtType(fileName: String): String {

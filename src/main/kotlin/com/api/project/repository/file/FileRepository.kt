@@ -1,4 +1,4 @@
-package com.api.project.repository
+package com.api.project.repository.file
 
 interface FileRepository {
 

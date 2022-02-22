@@ -3,13 +3,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.6.3"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.20"
-    kotlin("plugin.spring") version "1.5.20"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.spring") version "1.6.10"
 }
 
 group = "com.api"
-version = "0.0.2"
+version = "0.0.3"
 java.sourceCompatibility = JavaVersion.VERSION_11
+extra["springCloudVersion"] = "2021.0.1"
 
 repositories {
     mavenCentral()
@@ -33,10 +34,10 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.github.docker-java:docker-java:3.2.13")
     implementation("com.github.docker-java:docker-java-transport-httpclient5:3.2.13")
-    implementation("io.springfox:springfox-boot-starter:3.0.0")
-    implementation("io.springfox:springfox-swagger2:3.0.0")
-    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.6")
     implementation("org.apache.sshd:sshd-core:2.8.0")
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -49,7 +50,6 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver")
 }
 
-extra["springCloudVersion"] = "2020.0.3"
 
 dependencyManagement {
     imports {
@@ -69,3 +69,4 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+

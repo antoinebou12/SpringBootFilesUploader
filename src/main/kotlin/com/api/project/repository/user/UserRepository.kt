@@ -1,4 +1,4 @@
-package com.api.project.repository
+package com.api.project.repository.user
 
 import com.api.project.models.UserModel
 import org.springframework.data.mongodb.repository.MongoRepository

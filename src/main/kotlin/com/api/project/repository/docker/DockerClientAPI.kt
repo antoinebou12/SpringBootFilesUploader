@@ -1,4 +1,4 @@
-package com.api.project.repository
+package com.api.project.repository.docker
 
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.CreateContainerResponse
