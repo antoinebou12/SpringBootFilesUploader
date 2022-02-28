@@ -1,6 +1,5 @@
-package com.api.project.service
+package com.api.project.service.caddy
 
-import com.api.project.repository.CaddyAPI
 import com.api.project.repository.docker.DockerClientAPI
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

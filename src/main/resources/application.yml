@@ -31,6 +31,8 @@ docker:
 # Caddy API
 caddy:
   host: localhost:2019
+  email: antoine.bou13@gmail.com
+  base_url: "url.com"
 
 # Documentation
 springdoc:

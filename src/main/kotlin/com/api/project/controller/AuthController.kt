@@ -143,7 +143,6 @@ class AuthController {
             roles.add(userRole)
         }
 
-
         admin.roles = roles
         userRepository.save(admin)
         return ResponseEntity.ok<Any>(MessageResponse("User registered successfully!"))

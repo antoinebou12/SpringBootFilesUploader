@@ -1,6 +1,6 @@
 package com.api.project.controller
 
-import com.api.project.service.CaddyService
+import com.api.project.service.caddy.CaddyService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
